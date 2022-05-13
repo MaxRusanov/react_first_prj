@@ -10,5 +10,6 @@ let reducers = combineReducers({
 
 let store = createStore(reducers);
 
+window.store = store; // Сохранили ссылку на store глобально и в консоли можно будет наблюдать за ним
 
 export default store;

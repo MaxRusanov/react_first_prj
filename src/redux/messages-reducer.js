@@ -22,18 +22,23 @@ let initialState = {
 
 const messagesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_MESSAGE:
+    case ADD_MESSAGE: {
       const len = state.messages.length + 1;
       const newMessage = {
         id: len,
         message: state.newMessage
       };
-      state.messages.push(newMessage);
-      state.newMessage = '';
-      return state;
-    case UPDATE_NEW_MESSAGE_TEXT:
-      state.newMessage = action.newText;
-      return state;
+      let stateCopy = {...state}; //создаём поверхностную копию объекта state
+      stateCopy.messages = [...state.messages]; //создаём глубокую копию в state объекта state.posts
+      stateCopy.messages.push(newMessage);
+      stateCopy.newMessage = '';
+      return stateCopy;
+    }
+    case UPDATE_NEW_MESSAGE_TEXT: {
+      let stateCopy = {...state}; //создаём поверхностную копию объекта state
+      stateCopy.newMessage = action.newText;
+      return stateCopy;
+    }
     default:
       return state;
   }
