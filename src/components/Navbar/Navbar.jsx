@@ -12,14 +12,12 @@ const Navbar = () => {
         <NavLink to='/dialogs' className={({ isActive }) => (isActive ? classes.activeLink : '')}>Message</NavLink>
       </div>
       <div className={classes.item}>
-        {/*<a>News</a>*/}
+        <NavLink to='/users' className={({ isActive }) => (isActive ? classes.activeLink : '')}>Users</NavLink>
       </div>
       <div className={classes.item}>
         {/*<a>Music</a>*/}
       </div>
-      <div className={classes.item}>
-        {/*<a>Settings</a>*/}
-      </div>
+
     </nav>
   );
 }

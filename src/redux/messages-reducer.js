@@ -13,31 +13,32 @@ let initialState = {
   messages: [
     {id: 1, message: 'Hi'},
     {id: 2, message: 'How are you'},
-    {id: 3, message: 'Yo'},
-    {id: 5, message: 'Yo'},
-    {id: 6, message: 'Yo'},
+    {id: 3, message: 'Yo1'},
   ],
-  newMessage: '',
+  newMessageText: 'aaa'
 };
 
 const messagesReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_MESSAGE: {
-      const len = state.messages.length + 1;
+      // debugger;
+      const len = state.messages[state.messages.length-1].id + 1;
+      const myText = state.newMessageText;
       const newMessage = {
         id: len,
-        message: state.newMessage
+        message: myText,
       };
-      let stateCopy = {...state}; //создаём поверхностную копию объекта state
-      stateCopy.messages = [...state.messages]; //создаём глубокую копию в state объекта state.posts
-      stateCopy.messages.push(newMessage);
-      stateCopy.newMessage = '';
-      return stateCopy;
+      return {
+        ...state,
+        messages: [...state.messages, newMessage],
+        newMessageText: ''
+      };
     }
     case UPDATE_NEW_MESSAGE_TEXT: {
-      let stateCopy = {...state}; //создаём поверхностную копию объекта state
-      stateCopy.newMessage = action.newText;
-      return stateCopy;
+      return  {
+        ...state,
+        newMessageText: action.newText,
+      };
     }
     default:
       return state;

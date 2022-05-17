@@ -11,25 +11,28 @@ let initialState = {
 };
 
 const profileReducer = (state = initialState, action) => {
-
   switch (action.type) {
     case ADD_POST: {
-      const len = state.posts.length + 1;
+      const len = state.posts[state.posts.length-1].id + 1;
       const newPost = {
         id: len,
         message: state.newPostText,
         likesCount: 0
       };
-      let stateCopy = {...state}; //создаём поверхностную копию объекта state
-      stateCopy.posts = [...state.posts]; //создаём глубокую копию в state объекта state.posts
-      stateCopy.posts.push(newPost);
-      stateCopy.newPostText = '';
-      return stateCopy;
+      return {
+        ...state,
+        posts: [...state.posts, newPost],
+        newPostText: ''
+      };
+      // stateCopy.posts.push(newPost);
+      // return stateCopy;
     }
     case UPDATE_NEW_POST_TEXT: {
-      let stateCopy = {...state}; //создаём поверхностную копию объекта state
-      stateCopy.newPostText = action.newText;
-      return stateCopy;
+      return {
+        ...state,
+        newPostText: action.newText
+      }; //создаём поверхностную копию объекта state
+      // stateCopy.newPostText = action.newText;
     }
     default:
       return state;

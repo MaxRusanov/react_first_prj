@@ -29,7 +29,7 @@ const MyPosts = (props) => {
           <button onClick={ onAddPost }>Add post</button>
         </div>
       </div>
-      { props.posts.map(el =>  <Post message={el.message} likesCount={el.likesCount} />) }
+      { props.posts.map(el =>  <Post message={el.message} likesCount={el.likesCount} key={el.id}/>) }
 
       {/*<Post message='Hi, how are you?' />*/}
       {/*<Post message='It is my first post' />*/}
