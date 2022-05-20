@@ -1,35 +1,40 @@
 import React from 'react';
 import st from './Users.module.css';
+import userPhoto from './../../assets/images/user.png';
 
 const Users = (props) => {
-  if (props.users.length === 0) {
-    props.setUsers([
-      {
-        id: 1, photoUrl: 'https://i.pinimg.com/originals/33/b8/69/33b869f90619e81763dbf1fccc896d8d.jpg',
-        followed: false, fullName: 'Max', status: 'I am a boos', location: {city: 'Kemerovo', country: 'RF'}
-      },
-      {
-        id: 2, photoUrl: 'https://i.pinimg.com/originals/33/b8/69/33b869f90619e81763dbf1fccc896d8d.jpg',
-        followed: true, fullName: 'Sasha', status: 'I am a boos', location: {city: 'Moscov', country: 'RF'}
-      },
-      {
-        id: 3, photoUrl: 'https://i.pinimg.com/originals/33/b8/69/33b869f90619e81763dbf1fccc896d8d.jpg',
-        followed: false, fullName: 'Dmitry', status: 'I am a boos', location: {city: 'Minsk', country: 'Belarus'}
-      },
-      {
-        id: 4, photoUrl: 'https://i.pinimg.com/originals/33/b8/69/33b869f90619e81763dbf1fccc896d8d.jpg',
-        followed: true, fullName: 'Sergei', status: 'I am a boos', location: {city: 'Tula', country: 'RF'}
-      },
-    ]);
+  // debugger;
+  const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+  let pages = [];
+  for (let i = 0; i < pagesCount; i++) {
+    if (i < 50) { // !!! Ограничение, чтобы поместилось не более 50-элементов (ссылок по page)
+      pages.push(i + 1);
+    } else break;
   }
 
   return (
     <div>
-      {props.users.map((u) => (
-        <div key={u.id}>
+      <div>
+        {pages.map(p => {
+            return (
+              <span
+                className={props.currentPage === p && st.selectedPage}
+                onClick={(e) => {
+                  props.onPageChanged(p);
+                }}
+              >&nbsp;{p}&nbsp;</span>
+            );
+        })}
+      </div>
+      <div>
+        {props.users.map((u) => (
+          <div key={u.id}>
           <span>
             <div>
-              <img src={u.photoUrl} alt="avatar" className={st.userPhoto}/>
+              <img src={u.photos.small !== null
+                ? u.photos.small
+                : userPhoto
+              } alt="avatar" className={st.userPhoto}/>
             </div>
             <div>
               {u.followed
@@ -37,17 +42,18 @@ const Users = (props) => {
                 : <button onClick={() => props.follow(u.id)}>Follow</button>}
             </div>
           </span>
-          <span>
             <span>
-              <div>{u.fullName}</div>
+            <span>
+              <div>{u.name}</div>
               <div>{u.status}</div>
             </span>
             <span>
-              <div>{u.location.country}</div>
-              <div>{u.location.city}</div>
+              {/*<div>{u.location.country}</div>*/}
+              {/*<div>{u.location.city}</div>*/}
             </span>
           </span>
-        </div>))}
+          </div>))}
+      </div>
     </div>
   );
 }
