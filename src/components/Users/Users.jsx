@@ -1,6 +1,7 @@
 import React from 'react';
 import st from './Users.module.css';
 import userPhoto from './../../assets/images/user.png';
+import {NavLink} from "react-router-dom";
 
 const Users = (props) => {
   // debugger;
@@ -11,6 +12,7 @@ const Users = (props) => {
       pages.push(i + 1);
     } else break;
   }
+
 
   return (
     <div>
@@ -31,15 +33,21 @@ const Users = (props) => {
           <div key={u.id}>
           <span>
             <div>
-              <img src={u.photos.small !== null
-                ? u.photos.small
-                : userPhoto
-              } alt="avatar" className={st.userPhoto}/>
+              <NavLink to={'/profile/' + u.id}>
+                <img src={u.photos.small !== null
+                  ? u.photos.small
+                  : userPhoto
+                } alt="avatar" className={st.userPhoto}/>
+              </NavLink>
             </div>
             <div>
               {u.followed
-                ? <button onClick={() => props.unfollow(u.id)}>UnFollow</button>
-                : <button onClick={() => props.follow(u.id)}>Follow</button>}
+                ? <button disabled={props.folowingInProgress.some(id => id === u.id)} onClick={() => {
+                  props.unfollowThunkCreator(u.id);
+                }}>UnFollow</button>
+                : <button disabled={props.folowingInProgress.some(id => id === u.id)} onClick={() =>{
+                  props.followThunkCreator(u.id);
+                }}>Follow</button>}
             </div>
           </span>
             <span>

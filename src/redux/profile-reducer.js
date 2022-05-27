@@ -1,5 +1,8 @@
+import {profileAPI} from "../api/api";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
 let initialState = {
   posts: [
@@ -8,6 +11,7 @@ let initialState = {
     {id: 3, message: 'Ok', likesCount: 5},
   ],
   newPostText: 'Hi',
+  profile: null,
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -34,6 +38,9 @@ const profileReducer = (state = initialState, action) => {
       }; //создаём поверхностную копию объекта state
       // stateCopy.newPostText = action.newText;
     }
+    case SET_USER_PROFILE: {
+      return {...state, profile: action.profile}
+    }
     default:
       return state;
   }
@@ -45,7 +52,14 @@ export const updateNewPostTextActionCreator = (text) => ({
   type: UPDATE_NEW_POST_TEXT,
   newText: text
 });
+export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 
+
+export const profileThunkCreator = (userId) => {
+  return (dispatch) => {
+    profileAPI.getProfile(userId).then(data => dispatch(setUserProfile(data)))
+  }
+}
 
 
 export default profileReducer;
