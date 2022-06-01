@@ -25,6 +25,9 @@ const App = (props) => {
             {/*<Route path='/profile' element={*/}
             {/*  <ProfileContainer store={props.store} />*/}
             {/*}/>*/}
+            <Route path='/profile' element={
+              <Profile store={props.store} />
+            }/>
             <Route path='/profile/:id' element={
               <Profile store={props.store} />
             }/>

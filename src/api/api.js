@@ -4,12 +4,13 @@ import * as axios from "axios";
 // Rest API: https://social-network.samuraijs.com/
 //базовый URL: https://social-network.samuraijs.com/api/1.0
 // withCredentials: true - авторизованный пользователь
+// Ваш ID: 24196
 
 const instance = axios.create({
   baseURL: 'https://social-network.samuraijs.com/api/1.0/',
   withCredentials: true,
   headers: {
-    "API-KEY": "0abc8177-4344-4f8d-aa25-70fc430dca6b"
+    "API-KEY": "6ee90980-e607-48ed-b8dc-b33e3335c9ea"
   }
 });
 
@@ -31,6 +32,12 @@ export const usersAPI = {
 export const profileAPI = {
   getProfile(userId) {
     return instance.get('profile/' + userId).then(response => response.data);
+  },
+  getSatus(userId) {
+    return instance.get('profile/status/' + userId);
+  },
+  updateStatus(status) {
+    return instance.put('profile/status/', {status: status});
   }
 }
 

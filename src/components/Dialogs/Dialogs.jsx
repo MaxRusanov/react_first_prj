@@ -1,24 +1,12 @@
 import React from 'react';
 import css from './Dialogs.module.css';
-import DialogItem from './DialogItem/DialogItem'
-import Message from './Message/Message'
+import DialogItem from './DialogItem/DialogItem';
+import Message from './Message/Message';
+import {Form, Field} from 'react-final-form';
 
 
 const Dialogs = (props) => {
 // debugger;
-  const newMessageElement = React.createRef();
-
-  const onMessageChange = () => {
-    // debugger;
-    const text = newMessageElement.current.value;
-    props.updateMessageText(text);
-  }
-
-  const onAddMessage = () => {
-    props.addMessage();
-  }
-
-  // if (!props.isAuth) return <Redirect to={'/login'} />;
 
   return (
     <div className={css.dialogs}>
@@ -31,13 +19,8 @@ const Dialogs = (props) => {
       </div>
       <div className={css.messages}>
         <div>
-          <div>
-            <textarea ref={newMessageElement} value={props.newMessageText} onChange={onMessageChange} />
-          </div>
-          <div>
-            <button onClick={onAddMessage}>Add message</button>
-            <hr/>
-          </div>
+          <DialogForm />
+          <hr/>
         </div>
         <div>
           {props.messages.map(el => <Message message={el.message} key={el.id} />)}
@@ -52,5 +35,26 @@ const Dialogs = (props) => {
     </div>
   );
 }
+
+const onSubmit = (data) => {
+  // props.updateMessageText(data.textMessage);
+}
+
+const DialogForm = () => (
+  <Form
+    onSubmit={onSubmit}
+    // initialValues={({ textMessage: 'AAA' })}
+    render={({handleSubmit}) => (
+      <form onSubmit={handleSubmit}>
+        <div>
+          <Field name="textMessage" component="textarea" placeholder="Введите текст"/>
+        </div>
+        <div>
+          <button type="submit">Добавить</button>
+        </div>
+      </form>
+    )}
+  />
+)
 
 export default Dialogs;
