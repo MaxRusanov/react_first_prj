@@ -73,7 +73,6 @@ export const getStatusThC = (userId) => (dispatch) => {
 export const updateStatusThC = (status) => (dispatch) => {
     profileAPI.updateStatus(status).then(response => {
       if (response.data.resultCode === 0) {
-        debugger;
         dispatch(setStatus(response.config.data));
       }
     });

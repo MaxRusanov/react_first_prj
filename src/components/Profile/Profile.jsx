@@ -21,7 +21,7 @@ const Profile = (props) => {
     }
     props.profileThunkCreator(params.id);
     props.getStatusThC(params.id);
-  });
+  }, []);
 
   return (
     <div>
