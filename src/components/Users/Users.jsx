@@ -2,31 +2,20 @@ import React from 'react';
 import st from './Users.module.css';
 import userPhoto from './../../assets/images/user.png';
 import {NavLink} from "react-router-dom";
+import Paginator from "../Paginator/Paginator";
 
 const Users = (props) => {
   // debugger;
-  const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-  let pages = [];
-  for (let i = 0; i < pagesCount; i++) {
-    if (i < 50) { // !!! Ограничение, чтобы поместилось не более 50-элементов (ссылок по page)
-      pages.push(i + 1);
-    } else break;
-  }
-
 
   return (
     <div>
       <div>
-        {pages.map(p => {
-            return (
-              <span
-                className={props.currentPage === p && st.selectedPage}
-                onClick={(e) => {
-                  props.onPageChanged(p);
-                }}
-              >&nbsp;{p}&nbsp;</span>
-            );
-        })}
+        <Paginator
+          totalItemsCount={props.totalUsersCount}
+          pageSize={props.pageSize}
+          currentPage={props.currentPage}
+          onPageChenged={props.onPageChanged}
+        />
       </div>
       <div>
         {props.users.map((u) => (
